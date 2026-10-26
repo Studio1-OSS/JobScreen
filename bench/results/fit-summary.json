@@ -1,0 +1,441 @@
+{
+  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+  "date": "2026-10-23",
+  "resumes": 50,
+  "roles": 10,
+  "scannedInMixed": 15,
+  "scorings": 1300,
+  "missing": 0,
+  "piles": [
+    {
+      "pile": "clean",
+      "pipeline": "vision",
+      "roles": [
+        {
+          "role": "INFORMATION-TECHNOLOGY",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.8111111111111111,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "ENGINEERING",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.9288888888888889,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "FINANCE",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.8822222222222222,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "ACCOUNTANT",
+          "n": 50,
+          "p5": 0.2,
+          "auc": 0.9177777777777778,
+          "top1": 0,
+          "missedFits": 0
+        },
+        {
+          "role": "HR",
+          "n": 50,
+          "p5": 0.8,
+          "auc": 0.9511111111111111,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "SALES",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.9044444444444445,
+          "top1": 0,
+          "missedFits": 0
+        },
+        {
+          "role": "HEALTHCARE",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.7466666666666667,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "TEACHER",
+          "n": 50,
+          "p5": 1,
+          "auc": 1,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "DESIGNER",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.9488888888888889,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "CONSULTANT",
+          "n": 50,
+          "p5": 0,
+          "auc": 0.6333333333333333,
+          "top1": 0,
+          "missedFits": 0
+        }
+      ],
+      "p5": 0.52,
+      "auc": 0.872,
+      "top1": 0.7,
+      "p5ci": [
+        0.36,
+        0.68
+      ],
+      "aucci": [
+        0.801,
+        0.932
+      ],
+      "missedFits": 0
+    },
+    {
+      "pile": "clean",
+      "pipeline": "library",
+      "roles": [
+        {
+          "role": "INFORMATION-TECHNOLOGY",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.8022222222222222,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "ENGINEERING",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.9,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "FINANCE",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.8622222222222222,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "ACCOUNTANT",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.9244444444444444,
+          "top1": 0.5,
+          "missedFits": 0
+        },
+        {
+          "role": "HR",
+          "n": 50,
+          "p5": 0.8,
+          "auc": 0.94,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "SALES",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.92,
+          "top1": 0,
+          "missedFits": 0
+        },
+        {
+          "role": "HEALTHCARE",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.6777777777777778,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "TEACHER",
+          "n": 50,
+          "p5": 1,
+          "auc": 1,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "DESIGNER",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.9511111111111111,
+          "top1": 0,
+          "missedFits": 0
+        },
+        {
+          "role": "CONSULTANT",
+          "n": 50,
+          "p5": 0,
+          "auc": 0.76,
+          "top1": 0,
+          "missedFits": 0
+        }
+      ],
+      "p5": 0.52,
+      "auc": 0.874,
+      "top1": 0.65,
+      "p5ci": [
+        0.36,
+        0.68
+      ],
+      "aucci": [
+        0.811,
+        0.928
+      ],
+      "missedFits": 0
+    },
+    {
+      "pile": "mixed",
+      "pipeline": "vision",
+      "roles": [
+        {
+          "role": "INFORMATION-TECHNOLOGY",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.7711111111111111,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "ENGINEERING",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.9288888888888889,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "FINANCE",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.8888888888888888,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "ACCOUNTANT",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.9288888888888889,
+          "top1": 0,
+          "missedFits": 0
+        },
+        {
+          "role": "HR",
+          "n": 50,
+          "p5": 0.8,
+          "auc": 0.9488888888888889,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "SALES",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.8933333333333333,
+          "top1": 0,
+          "missedFits": 0
+        },
+        {
+          "role": "HEALTHCARE",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.7422222222222222,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "TEACHER",
+          "n": 50,
+          "p5": 0.8,
+          "auc": 0.9955555555555555,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "DESIGNER",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.9555555555555556,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "CONSULTANT",
+          "n": 50,
+          "p5": 0,
+          "auc": 0.6555555555555556,
+          "top1": 0,
+          "missedFits": 0
+        }
+      ],
+      "p5": 0.5,
+      "auc": 0.871,
+      "top1": 0.7,
+      "p5ci": [
+        0.36,
+        0.62
+      ],
+      "aucci": [
+        0.801,
+        0.93
+      ],
+      "missedFits": 0
+    },
+    {
+      "pile": "mixed",
+      "pipeline": "library",
+      "roles": [
+        {
+          "role": "INFORMATION-TECHNOLOGY",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.5644444444444444,
+          "top1": 1,
+          "missedFits": 2
+        },
+        {
+          "role": "ENGINEERING",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.6466666666666666,
+          "top1": 0,
+          "missedFits": 2
+        },
+        {
+          "role": "FINANCE",
+          "n": 50,
+          "p5": 0.6,
+          "auc": 0.9088888888888889,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "ACCOUNTANT",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.6577777777777778,
+          "top1": 0.5,
+          "missedFits": 2
+        },
+        {
+          "role": "HR",
+          "n": 50,
+          "p5": 0.2,
+          "auc": 0.5377777777777778,
+          "top1": 1,
+          "missedFits": 3
+        },
+        {
+          "role": "SALES",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.8133333333333334,
+          "top1": 0,
+          "missedFits": 1
+        },
+        {
+          "role": "HEALTHCARE",
+          "n": 50,
+          "p5": 0.4,
+          "auc": 0.6,
+          "top1": 1,
+          "missedFits": 1
+        },
+        {
+          "role": "TEACHER",
+          "n": 50,
+          "p5": 1,
+          "auc": 1,
+          "top1": 1,
+          "missedFits": 0
+        },
+        {
+          "role": "DESIGNER",
+          "n": 50,
+          "p5": 0.2,
+          "auc": 0.4711111111111111,
+          "top1": 0,
+          "missedFits": 4
+        },
+        {
+          "role": "CONSULTANT",
+          "n": 50,
+          "p5": 0.06666666666666667,
+          "auc": 0.8266666666666667,
+          "top1": 0,
+          "missedFits": 0
+        }
+      ],
+      "p5": 0.407,
+      "auc": 0.703,
+      "top1": 0.55,
+      "p5ci": [
+        0.273,
+        0.567
+      ],
+      "aucci": [
+        0.604,
+        0.808
+      ],
+      "missedFits": 15
+    }
+  ],
+  "paired": [
+    {
+      "pile": "clean",
+      "meanP5Diff": 0,
+      "visionBetter": 1,
+      "libraryBetter": 1,
+      "ties": 8,
+      "p5DiffCi": [
+        -0.06,
+        0.06
+      ],
+      "meanAucDiff": -0.001,
+      "aucDiffCi": [
+        -0.033,
+        0.024
+      ],
+      "aucVisionBetter": 5,
+      "aucLibraryBetter": 4
+    },
+    {
+      "pile": "mixed",
+      "meanP5Diff": 0.093,
+      "visionBetter": 3,
+      "libraryBetter": 2,
+      "ties": 5,
+      "p5DiffCi": [
+        -0.033,
+        0.247
+      ],
+      "meanAucDiff": 0.168,
+      "aucDiffCi": [
+        0.05,
+        0.287
+      ],
+      "aucVisionBetter": 7,
+      "aucLibraryBetter": 3
+    }
+  ]
+}

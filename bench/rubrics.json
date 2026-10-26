@@ -1,0 +1,417 @@
+{
+  "INFORMATION-TECHNOLOGY": {
+    "title": "IT Manager — Infrastructure, Help Desk & Security (500-person company)",
+    "summary": "Rubric emphasized on demonstrated ownership of infrastructure operations, help desk leadership, security program work, vendor/contract management, and budget accountability at comparable scale. Weights scaled to sum to 100.",
+    "categories": [
+      {
+        "key": "infrastructure_operations",
+        "label": "Infrastructure Operations & Uptime",
+        "weight": 25,
+        "lookFor": "Explicit ownership of servers, networks, or cloud environments (Windows/Linux, VMware, AWS/Azure, LAN/WAN, firewalls); named uptime/SLA targets or results (e.g., '99.9% availability across 400 endpoints', 'reduced unplanned downtime by X%'); monitoring/backup/DR tooling actually used (Nagios, Datadog, Veeam, Zerto); evidence of handling incident response or outage recovery; environments sized in hundreds to low thousands of users."
+      },
+      {
+        "key": "help_desk_leadership",
+        "label": "Help Desk & End-User Support Leadership",
+        "weight": 20,
+        "lookFor": "Managed or built a support function: named ticketing systems (ServiceNow, Jira Service Management, Freshservice, Zendesk), team size supervised (e.g., 'led 4 technicians'), ticket volume and resolution metrics met ('kept first-response under 30 min', 'cut backlog 40%'), documented SLA definitions and measured against them; onboarding/offboarding and asset management workflows described; support scope matching ~500 users."
+      },
+      {
+        "key": "security_program",
+        "label": "Security Operations & Compliance",
+        "weight": 20,
+        "lookFor": "Hands-on security work, not just awareness: identity/access management (Okta, Entra ID, MFA rollout), endpoint protection, patching cadence, phishing training or awareness program results; frameworks or standards engaged (NIST CSF, ISO 27001, SOC 2, CIS Controls); audit participation or remediation owned; security incidents handled with described outcome; policy authoring (acceptable use, IR runbooks)."
+      },
+      {
+        "key": "vendor_management",
+        "label": "Vendor & Contract Management",
+        "weight": 15,
+        "lookFor": "Named vendors or categories managed (MSPs, ISPs, SaaS, hardware, telco); specific outcomes such as renegotiated contracts, consolidated vendors, savings figures ('renegotiated ISP contract, saved $X/yr'), or transition of an MSP; evidence of running RFPs, renewals, or SLA enforcement with vendors; described escalation handling with third parties."
+      },
+      {
+        "key": "budget_ownership",
+        "label": "Budget & Cost Accountability",
+        "weight": 12,
+        "lookFor": "Explicit budget responsibility with figures ('managed $1.2M annual IT budget', '$50K monthly cloud spend'); forecasting or capex/opex planning described; cost-reduction or optimization results with numbers; procurement approval authority or hardware refresh cycle planning; license/asset cost management."
+      },
+      {
+        "key": "leadership_scope",
+        "label": "Team Leadership & Stakeholder Scope",
+        "weight": 8,
+        "lookFor": "Direct people management (reports, hiring, performance reviews) named with team size; cross-functional work with HR, Finance, or Facilities; project delivery evidence (migrations, office moves, system rollouts) with timeline or outcome; communication of IT strategy to non-technical leadership; scale of organization supported stated and comparable."
+      }
+    ],
+    "redFlags": [
+      "Claims 'managed infrastructure' or 'led security' with no named tools, systems, team size, or measurable outcome — title without evidence",
+      "Lists the required tool categories (ticketing, cloud, IAM) only as keyword skills with no project or operational context tied to them",
+      "Uptime, SLA, savings, or budget figures asserted without any basis (no system, timeframe, or scope given)",
+      "Security described solely as 'ensured compliance' or 'kept us secure' with no framework, control, audit, or incident detail"
+    ]
+  },
+  "ENGINEERING": {
+    "title": "Mechanical / Process Engineer",
+    "summary": "Rubric for screening resumes against a manufacturing process engineering role: process design and improvement, CAD proficiency, root-cause analysis, and safety/quality standards.",
+    "categories": [
+      {
+        "key": "process_design_improvement",
+        "label": "Manufacturing Process Design & Improvement",
+        "weight": 30,
+        "lookFor": "Evidence of designing, modifying or scaling manufacturing processes: cell/layout design, cycle-time reduction, yield or throughput gains, scrap reduction, OEE or uptime improvements, lean/kaizen/6-sigma projects with quantified before/after results, equipment selection and commissioning."
+      },
+      {
+        "key": "cad",
+        "label": "CAD & Technical Drawing",
+        "weight": 20,
+        "lookFor": "Hands-on CAD use named in the resume (SolidWorks, AutoCAD, Creo/Pro-E, CATIA, NX, Inventor): 3D models, assemblies, 2D drawings, GD&T, tolerance stack-ups, BOMs, P&ID or fixture/tooling drawings. Note software versions and scope of modeling where stated."
+      },
+      {
+        "key": "root_cause",
+        "label": "Root-Cause Analysis & Problem Solving",
+        "weight": 25,
+        "lookFor": "Concrete examples of diagnosing and eliminating process failures: 5-Why, fishbone, FMEA, DOE, SPC, 8D, CAPA; described defects or failures investigated, corrective actions implemented, and measured outcomes (defect rate, downtime, rework reduction)."
+      },
+      {
+        "key": "safety_quality",
+        "label": "Safety & Quality Standards",
+        "weight": 15,
+        "lookFor": "Application of standards and compliance work: ISO 9001, IATF 16949, ISO 13485, OSHA, machine guarding, LOTO, risk assessments, PFMEA, control plans, inspection plans, audits, validation (IQ/OQ/PQ), SOP/WI authorship."
+      },
+      {
+        "key": "engineering_fundamentals",
+        "label": "Engineering Fundamentals & Tooling",
+        "weight": 10,
+        "lookFor": "Mechanical/process engineering education plus applied fundamentals: materials and tolerances, thermodynamics/fluids or statics where relevant, statistical methods (SPC, capability studies, Minitab/Excel analysis), automation/PLC exposure, project or change-management experience in production environments."
+      }
+    ],
+    "redFlags": [
+      "Claims process improvements or cost savings without any baseline, metric or scope to support them.",
+      "Lists CAD as a skill but no project, drawing or modeling work references it anywhere in the resume.",
+      "Claims root-cause or problem-solving experience without naming a method, a problem investigated, or an outcome.",
+      "No evidence of working with any quality or safety standard despite the role requiring it."
+    ]
+  },
+  "FINANCE": {
+    "title": "Financial Analyst — Resume Screening Rubric",
+    "summary": "Weights reflect the JD's emphasis on forecasting/budgeting, financial modeling, and leadership reporting. Evidence must be verifiable from the resume itself (systems, deliverables, quantified outcomes).",
+    "categories": [
+      {
+        "key": "forecasting_budgeting",
+        "label": "Forecasting & Budgeting",
+        "weight": 30,
+        "lookFor": "Ownership of annual budgets or rolling forecasts (e.g., 'built FY24 budget for $X P&L'); driver-based forecast models; quarterly reforecast cycles; budget vs. actual tracking across departments; FP&A tooling such as Anaplan, Adaptive Insights, Jedox, Oracle Hyperion, SAP BPC, or advanced Excel with explicit model descriptions."
+      },
+      {
+        "key": "variance_analysis",
+        "label": "Variance Analysis",
+        "weight": 20,
+        "lookFor": "Month-end or quarter-end variance analysis (budget vs. actual, forecast vs. actual); root-cause explanations of variances; bridge or walk analyses (price/volume/mix, FX impact); corrective actions taken based on findings; quantified results such as 'identified $1.2M of overspend' or 'closed gap to plan by 4%'."
+      },
+      {
+        "key": "financial_modeling",
+        "label": "Financial Modeling",
+        "weight": 20,
+        "lookFor": "Named model types built (three-statement, DCF, scenario/sensitivity, cohort, unit economics, SaaS ARR models); complexity handled (multi-entity, multi-currency, large data sets); automation or model rebuilds (e.g., 'cut model refresh from 2 days to 2 hours'); tools: Excel (INDEX/MATCH, Power Query), SQL, Python, VBA, Power BI/Tableau where relevant to modeling."
+      },
+      {
+        "key": "leadership_reporting",
+        "label": "Reporting to Leadership",
+        "weight": 15,
+        "lookFor": "Recurring deliverables to executives, board, or investors (monthly business reviews, board packs, KPI dashboards); audience named (CFO, VP, board); narrative/commentary writing, not just data pulls; cadence and scale (e.g., 'board deck for 12-person board, quarterly'); tools: PowerPoint, Power BI, Tableau, Looker."
+      },
+      {
+        "key": "systems_data_tooling",
+        "label": "Systems & Data Tooling",
+        "weight": 10,
+        "lookFor": "ERP/EPM systems used hands-on (NetSuite, SAP, Oracle, Workday, Anaplan, Adaptive); data extraction and transformation (SQL, Power Query, Python); dashboarding tools; concrete efficiency outcomes from tooling (e.g., 'automated 30 hours/month of manual reporting')."
+      },
+      {
+        "key": "scope_impact",
+        "label": "Scope & Quantified Impact",
+        "weight": 5,
+        "lookFor": "Quantified outcomes tied to the work: revenue influenced, cost savings, forecast accuracy improvement, time saved, headcount or P&L size supported; progression in scope (e.g., from single cost center to full P&L); evidence of independent ownership versus support-only roles."
+      }
+    ],
+    "redFlags": [
+      "Claims forecasting/modeling experience but names no tools, model types, or deliverables — no way to verify the work was actually done.",
+      "Lists 'financial modeling' or 'variance analysis' as skills without any bullet describing a model built or an analysis delivered.",
+      "Reporting claims with no audience or cadence ('reported to management') — no indication of leadership-facing work despite it being a core JD requirement.",
+      "Quantified results with no basis ('saved millions') without stating scope, baseline, or method."
+    ]
+  },
+  "ACCOUNTANT": {
+    "title": "Staff Accountant",
+    "summary": "Screens for hands-on general-ledger accounting evidence: close ownership, reconciliation depth, GAAP application, AP/AR processing, audit support, and ERP system fluency. Weights prioritize close and reconciliations, the core of the role.",
+    "categories": [
+      {
+        "key": "month_end_close",
+        "label": "Month-End Close Ownership",
+        "weight": 25,
+        "lookFor": "Named responsibility for close cycles (e.g., 'owned full-cycle close for $X revenue entity'), stated close timelines achieved (e.g., 5-day close, reduced from 10), specific close tasks (journal entries, accruals, prepaids, fixed assets, intercompany), volume indicators (number of entities, accounts, or journal entries per month)."
+      },
+      {
+        "key": "reconciliations",
+        "label": "Account Reconciliations",
+        "weight": 20,
+        "lookFor": "Balance sheet reconciliations performed (bank, credit card, inventory, prepaid, payroll, intercompany), volume and cadence stated (e.g., '40+ balance sheet accounts monthly'), evidence of resolving reconciling items, clean-audit or zero-unreconciled-items outcomes, use of reconciliation tools or ERP modules."
+      },
+      {
+        "key": "gaap_technical",
+        "label": "GAAP Accounting & Reporting",
+        "weight": 15,
+        "lookFor": "Application of specific GAAP areas (revenue recognition ASC 606, leases ASC 842, capitalized software, inventory costing), preparation of financial statements or schedules, journal entry support and documentation, technical research cited, CPA/CMA progress as a signal of accounting fundamentals (not school prestige)."
+      },
+      {
+        "key": "ap_ar",
+        "label": "Accounts Payable / Receivable",
+        "weight": 15,
+        "lookFor": "AP processing volumes (invoices per week/month), 3-way match, vendor master and payment runs, AR cash application, collections results (DSO reduction, aging cleanup), customer/vendor reconciliation, AP/AR automation or approval-workflow tools used."
+      },
+      {
+        "key": "audit_support",
+        "label": "Audit & Compliance Support",
+        "weight": 10,
+        "lookFor": "Preparation of audit PBC schedules, coordination with external auditors, number of audits supported, findings resolved with no repeat issues, internal control documentation or SOX testing support, sales/use tax or payroll tax filing exposure."
+      },
+      {
+        "key": "erp_systems",
+        "label": "ERP & Accounting Systems",
+        "weight": 15,
+        "lookFor": "Named ERP systems in active use (NetSuite, SAP, Oracle, QuickBooks, Sage Intacct, Microsoft Dynamics), modules used (GL, AP, AR, fixed assets), Excel skills evidenced by concrete work (pivot tables, VLOOKUP/XLOOKUP, large-dataset reconciliations), implementation or migration participation."
+      }
+    ],
+    "redFlags": [
+      "Claims 'full-cycle accounting' or 'month-end close' with no close tasks, timelines, or entity/account volumes anywhere in the resume.",
+      "Lists an ERP (e.g., NetSuite, SAP) only in a skills section with no job bullet showing work done in it.",
+      "States GAAP knowledge but no specific standards, schedules, or financial statements prepared.",
+      "AP/AR described only in general terms with no invoice volumes, aging, or payment-run detail."
+    ]
+  },
+  "HR": {
+    "title": "HR Generalist",
+    "summary": "Screens resumes for demonstrated, hands-on HR generalist experience across recruiting, onboarding, employee relations, benefits administration, HRIS, and policy compliance. Weights emphasize recruiting and employee relations as the most commonly stressed core functions.",
+    "categories": [
+      {
+        "key": "recruiting",
+        "label": "Recruiting & Talent Acquisition",
+        "weight": 100,
+        "lookFor": ""
+      }
+    ],
+    "redFlags": []
+  },
+  "SALES": {
+    "title": "Account Executive – Resume Screening Rubric",
+    "summary": "Evidence-based rubric for a quota-carrying B2B closer role. Weights reflect the JD's emphasis on owning and hitting quota, prospecting and closing, CRM pipeline management, and key account growth.",
+    "categories": [
+      {
+        "key": "quota_attainment",
+        "label": "Quota Ownership & Attainment",
+        "weight": 30,
+        "lookFor": "Explicit personal quota figures and attainment (e.g., '$1.2M annual quota, 112% attainment'; 'closed $850K vs. $700K target'). Multiple years of carrying and hitting a number, with percentages or dollar figures. 'Closed-won' revenue credited to the candidate personally, not just team revenue."
+      },
+      {
+        "key": "closing_track_record",
+        "label": "B2B Deal Closing",
+        "weight": 25,
+        "lookFor": "Named evidence of closing new B2B business: deal counts and average deal size (e.g., 'closed 40 new logos, avg. $35K ACV'), deal cycles, stages owned end-to-end (prospect → close), customer segments (SMB/mid-market/enterprise), contract types (subscription, ACV, ARR). Seller-side closing, not account management alone."
+      },
+      {
+        "key": "prospecting",
+        "label": "Prospecting & Pipeline Generation",
+        "weight": 15,
+        "lookFor": "Evidence of generating own pipeline: outbound activity with numbers (e.g., '150 outbound touches/week', 'sourced $2M in pipeline'), tools used (Salesforce, HubSpot, Outreach, Salesloft, LinkedIn Sales Navigator, ZoomInfo), documented cold-calling/email sequences, and sourced-vs.-inbound pipeline split."
+      },
+      {
+        "key": "crm_pipeline_management",
+        "label": "CRM & Pipeline Management",
+        "weight": 15,
+        "lookFor": "Named CRM systems in active use (Salesforce, HubSpot, Pipedrive) and evidence of pipeline hygiene/forecasting (e.g., 'managed 60-opportunity pipeline in Salesforce', 'weekly forecast accuracy within X%', 'stage-based pipeline reviews'). Consistent tracking over multiple roles, not a one-line tool mention."
+      },
+      {
+        "key": "account_growth",
+        "label": "Key Account Growth",
+        "weight": 15,
+        "lookFor": "Evidence of growing existing/key accounts: expansion or upsell revenue figures (e.g., 'grew top 10 accounts 38% YoY', 'land-and-expand from $20K to $90K ARR'), named account segments, renewal and net revenue retention mentions, multi-threaded stakeholder relationships described concretely."
+      }
+    ],
+    "redFlags": [
+      "Quota claims with no numbers or context (e.g., 'consistently exceeded targets' with no figures, timeframe, or role).",
+      "Revenue or wins attributed only to 'the team' with no indication of the candidate's personal contribution.",
+      "No evidence of any required core skill (closing, prospecting, or CRM) anywhere in the resume.",
+      "CRM or sales tools listed in a skills section but never tied to an actual role or workflow."
+    ]
+  },
+  "HEALTHCARE": {
+    "title": "Healthcare Operations Coordinator — Resume Screening Rubric",
+    "summary": "Five weighted categories drawn from the job description: patient care coordination, clinical compliance, scheduling, EHR systems, and team supervision. Each category requires concrete, resume-verifiable evidence such as named systems, patient volumes, audit outcomes, and schedule scale.",
+    "categories": [
+      {
+        "key": "patient_care_coordination",
+        "label": "Patient Care Coordination",
+        "weight": 25,
+        "lookFor": "Evidence of coordinating care across providers or departments: care plan tracking, referral follow-up, transitions between intake/discharge/referral, case loads or panels managed (e.g., 'coordinated care for 150-patient panel', 'tracked referrals to closure'), patient follow-up processes owned end to end, escalation of clinical concerns to the right clinician. Name the workflow and the volume."
+      },
+      {
+        "key": "clinical_compliance",
+        "label": "Clinical Compliance",
+        "weight": 25,
+        "lookFor": "Evidence of working within and enforcing clinical regulatory requirements: HIPAA privacy handling, audits/inspections prepared for or passed (with names of standards such as Joint Commission, CMS, OSHA, or state licensing), policy and procedure maintenance, incident reporting, staff training completion tracked, credentialing or licensure tracking. Look for audit results, deficiency counts, or remediation outcomes, not just 'ensured compliance'."
+      },
+      {
+        "key": "scheduling",
+        "label": "Scheduling & Capacity Planning",
+        "weight": 20,
+        "lookFor": "Evidence of building or running clinical schedules: provider/staff rosters, patient appointment templates, coverage for call-outs or leave, wait-time or no-show reduction with numbers, volume handled (e.g., 'scheduled 60+ providers weekly', 'cut no-shows from 18% to 9%'). Look for the scheduling system used and the scale of the operation."
+      },
+      {
+        "key": "ehr_systems",
+        "label": "EHR Systems",
+        "weight": 20,
+        "lookFor": "Named EHR/EMR platforms actually used in the work (Epic, Cerner/Oracle Health, Meditech, Athenahealth, NextGen, eClinicalWorks, Allscripts, Practice Fusion), with evidence of depth of use: build/template configuration, report generation, data entry standards, training others, migration or implementation support, integration with scheduling or billing. Generic 'proficient with computers' is not evidence."
+      },
+      {
+        "key": "team_supervision",
+        "label": "Team Supervision",
+        "weight": 10,
+        "lookFor": "Evidence of directly supervising staff: team size and roles supervised (front desk, medical assistants, coordinators, scribes), hiring/interviewing, onboarding, performance reviews, corrective action, coverage of a shift or site. Look for headcount, span of control, and outcomes (retention, training completion, throughput)."
+      }
+    ],
+    "redFlags": [
+      "Claims 'compliance experience' or 'EHR experience' with no named system, standard, or audit outcome anywhere in the resume.",
+      "States ownership of scheduling or coordination duties without any scale (no headcount, patient volume, or provider count).",
+      "Lists 'supervised a team' but describes only individual task work; no direct reports named and no supervisory duties described.",
+      "Describes 'patient care' duties that are purely administrative billing or claims work with no coordination, referral, or clinical workflow involvement."
+    ]
+  },
+  "TEACHER": {
+    "title": "K-12 Teacher Resume Screening Rubric",
+    "summary": "Scores resumes on evidence of core teaching competencies: planning, classroom management, differentiation, use of assessment data, and parent communication. Only work-related evidence counts; protected attributes and employment gaps are never considered.",
+    "categories": [
+      {
+        "key": "lesson_planning",
+        "label": "Lesson Planning & Curriculum Design",
+        "weight": 25,
+        "lookFor": ""
+      },
+      {
+        "key": "classroom_management",
+        "label": "Classroom Management",
+        "weight": 20,
+        "lookFor": ""
+      },
+      {
+        "key": "differentiated_instruction",
+        "label": "Differentiated Instruction",
+        "weight": 20,
+        "lookFor": ""
+      },
+      {
+        "key": "assessment_data",
+        "label": "Assessment Data & Use of Results",
+        "weight": 20,
+        "lookFor": ""
+      },
+      {
+        "key": "parent_communication",
+        "label": "Parent & Family Communication",
+        "weight": 15,
+        "lookFor": ""
+      }
+    ],
+    "redFlags": [
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "DESIGNER": {
+    "title": "Graphic / Product Designer — Brand & Digital",
+    "summary": "Screening rubric for a designer who can produce brand and digital work, evidenced by a portfolio of shipped projects and fluency in Adobe CC or Figma, and who has collaborated with marketing and product teams. Weights emphasize portfolio evidence of shipped work and hands-on tool proficiency, per the job description.",
+    "categories": [
+      {
+        "key": "portfolio_shipped_work",
+        "label": "Portfolio of shipped work",
+        "weight": 30,
+        "lookFor": "Portfolio (link in resume) showing completed, real-world deliverables — live websites/apps, published campaigns, released brand systems, packaging or marketing collateral — with project context (client/product, your role, outcome). Prefer work that shipped or is in production over student or speculative concepts. Concrete numbers where possible: launch dates, user/campaign scale, measurable results (conversion, engagement, adoption)."
+      },
+      {
+        "key": "brand_design",
+        "label": "Brand design experience",
+        "weight": 20,
+        "lookFor": "Evidence of building or applying brand systems: logo/identity work, typography and color systems, brand guidelines, templates, or campaign creative. Names the brand or client and describes the deliverable (e.g., 'redesigned identity for X; produced 40-page brand guideline' or 'built social template kit used across Y campaigns')."
+      },
+      {
+        "key": "digital_product_design",
+        "label": "Digital / product design experience",
+        "weight": 20,
+        "lookFor": "Work on digital interfaces: web pages, landing pages, mobile/web app UI, design systems, or prototypes. Evidence of designing for product contexts (user flows, component libraries, responsive layouts) and of handoff to engineering (specs, Figma files, tickets). Names the product or feature and its shipped state."
+      },
+      {
+        "key": "tools",
+        "label": "Adobe CC / Figma proficiency",
+        "weight": 15,
+        "lookFor": "Explicit listing and demonstrated use of Figma and/or Adobe Creative Cloud apps (Photoshop, Illustrator, InDesign, After Effects) tied to portfolio pieces or job duties, e.g., 'designed all screens in Figma; produced print collateral in InDesign.' Depth matters: component libraries/auto-layout in Figma, or production-ready print files in Adobe CC, is stronger than a bare tool list."
+      },
+      {
+        "key": "cross_functional_collaboration",
+        "label": "Collaboration with marketing and product",
+        "weight": 15,
+        "lookFor": "Evidence of working alongside marketing and product teams: campaign work with a marketing group, product features built with PMs and engineers, design reviews, or shared roadmaps. Look for concrete collaboration artifacts — briefs, launch campaigns, sprint participation, stakeholder sign-off — rather than generic 'team player' claims."
+      }
+    ],
+    "redFlags": [
+      "Portfolio link missing, broken, or shows only unshipped/speculative concepts despite claims of shipped work",
+      "Claims of brand or product launches with no named project, client, or role to verify",
+      "Lists Figma or Adobe CC but no portfolio or duty description showing actual use",
+      "Claims collaboration with marketing/product but no concrete deliverable or team context"
+    ]
+  },
+  "CONSULTANT": {
+    "title": "Management Consultant Resume-Screening Rubric",
+    "summary": "Rubric built from the JD's four pillars: problem structuring, analysis & recommendations, project delivery, and stakeholder management, plus client engagement foundation and tool/credential evidence.",
+    "categories": [
+      {
+        "key": "problem_structuring",
+        "label": "Problem Structuring & Hypothesis-Driven Work",
+        "weight": 22,
+        "lookFor": "Resume shows engagement or project work framed as structured problems: issue trees, hypotheses, workplans, scoping statements, 'led diagnostic of X', 'structured ambiguous Y into Z workstreams'. Evidence of breaking down business problems (market entry, cost reduction, operating model, growth) into modules. Named frameworks with concrete application, or bespoke problem-solving described with deliverables attached (e.g., 'built 3-part cost diagnostic for a 40-store retailer')."
+      },
+      {
+        "key": "analysis_recommendations",
+        "label": "Analysis & Recommendation Quality",
+        "weight": 22,
+        "lookFor": "Concrete analytical output with numbers: financial models, market sizing, benchmarking, data analysis (SQL/Excel/Python/R) producing quantified findings. Recommendations that name the decision made and outcome ('recommended SKU rationalization; client cut 18% of catalog, saving $2.1M'). Evidence of synthesizing data into a 'so what' — exhibits, decks, business cases, board papers. Distinguish analysis performed vs. slides merely formatted."
+      },
+      {
+        "key": "project_delivery",
+        "label": "Project Delivery & Execution",
+        "weight": 20,
+        "lookFor": "Delivered engagements/workstreams with scope, timeline and result: 'owned 2 of 5 workstreams over a 12-week engagement', 'delivered 6 client projects', on-time milestones, budget/team size managed. Evidence of managing plans, dependencies, risks, and implementation support beyond recommendation. Quantified outcomes (cost saved, revenue uplift, process time reduced, adoption rate)."
+      },
+      {
+        "key": "stakeholder_management",
+        "label": "Stakeholder & Client Management",
+        "weight": 18,
+        "lookFor": "Named stakeholder interaction: client executives, steering committees, workshops, interviews, change/communications, cross-functional coordination. Evidence of managing expectations, aligning conflicting parties, presenting to senior audiences ('presented findings to CFO and 3 VPs'). Facilitation, workshop design, or client relationship ownership described with concrete scope (who, how senior, what outcome)."
+      },
+      {
+        "key": "client_engagement_foundation",
+        "label": "Client Engagement & Consulting Context",
+        "weight": 10,
+        "lookFor": "Prior consulting-firm experience (named firms or clearly described advisory engagements), or comparable client-facing project work in industry (internal strategy, transformation, PMO, corporate development). Evidence of working in client-site, multi-client, or billable/project-based environments. Industry or functional depth relevant to consulting (e.g., specific sectors served, functional expertise like operations, pricing, org design)."
+      },
+      {
+        "key": "tools_credentials_trajectory",
+        "label": "Tools, Credentials & Demonstrated Trajectory",
+        "weight": 8,
+        "lookFor": "Tools actually in use: Excel (modeling, pivot/Lookups), PowerPoint (storylined decks), data tools (SQL, Python, R, Tableau, Power BI), project tools (Jira, Asana, MS Project). Credentials relevant to the work (MBA, CFA, PMP, Lean/Six Sigma, specific sector certifications) — treated as supporting evidence, not as prestige proxy. Trajectory of increasing scope: promotion cadence, growing workstream ownership, or expanding client responsibility, described with role substance."
+      }
+    ],
+    "redFlags": [
+      "Claims 'led' or 'managed' engagements without any scope detail (team size, timeline, budget, deliverables) to support the claim.",
+      "Lists consulting frameworks or buzzwords (MECE, issue tree, hypothesis-driven) with no described application or resulting deliverable.",
+      "Quantified outcomes (savings, revenue, efficiency gains) presented with no basis — no baseline, timeframe, or attribution to the candidate's work.",
+      "No evidence of analysis-to-recommendation work despite the role requiring it: resume shows only coordination, scheduling, or slide production."
+    ]
+  }
+}

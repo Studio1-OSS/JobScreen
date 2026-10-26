@@ -1,0 +1,25 @@
+# dependencies
+/node_modules
+
+# Next.js
+/.next/
+/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# env (only the example is committed)
+.env*
+!.env.example
+
+# benchmark data: downloaded resumes, rendered tracks and logs stay local; results are committed
+/bench/data/
+
+# python
+__pycache__/
+.venv/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+*.log

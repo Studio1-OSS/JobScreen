@@ -1,0 +1,122 @@
+{
+  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+  "date": "2026-10-23",
+  "resumes": 50,
+  "runs": 320,
+  "failed": 0,
+  "tracks": [
+    {
+      "track": "clean",
+      "pipelines": [
+        {
+          "pipeline": "vision",
+          "n": 50,
+          "f1": 0.99,
+          "emptyRate": 0,
+          "meanScore": 33.5,
+          "meanDelta": 0,
+          "meanAbsDelta": 0,
+          "maxDelta": 0,
+          "flaggedRate": 0,
+          "hiddenFoundRate": 0,
+          "p50ms": 10941,
+          "meanTokens": 8381
+        },
+        {
+          "pipeline": "text",
+          "n": 50,
+          "f1": 1,
+          "emptyRate": 0,
+          "meanScore": 33.5,
+          "meanDelta": 0,
+          "meanAbsDelta": 0,
+          "maxDelta": 0,
+          "flaggedRate": 0,
+          "hiddenFoundRate": 0,
+          "p50ms": 6914,
+          "meanTokens": 4357
+        }
+      ]
+    },
+    {
+      "track": "scanned",
+      "pipelines": [
+        {
+          "pipeline": "vision",
+          "n": 50,
+          "f1": 0.99,
+          "emptyRate": 0,
+          "meanScore": 33.6,
+          "meanDelta": 0.1,
+          "meanAbsDelta": 3.2,
+          "maxDelta": 10,
+          "flaggedRate": 0,
+          "hiddenFoundRate": 0,
+          "p50ms": 12443,
+          "meanTokens": 7968
+        },
+        {
+          "pipeline": "text",
+          "n": 50,
+          "f1": 0,
+          "emptyRate": 1,
+          "meanScore": 0,
+          "meanDelta": -33.5,
+          "meanAbsDelta": 33.5,
+          "maxDelta": 0,
+          "flaggedRate": 0,
+          "hiddenFoundRate": 0,
+          "p50ms": 1967,
+          "meanTokens": 1340
+        }
+      ]
+    },
+    {
+      "track": "injected",
+      "pipelines": [
+        {
+          "pipeline": "vision",
+          "n": 50,
+          "f1": 0.98,
+          "emptyRate": 0,
+          "meanScore": 33.5,
+          "meanDelta": 0,
+          "meanAbsDelta": 4.4,
+          "maxDelta": 10,
+          "flaggedRate": 1,
+          "hiddenFoundRate": 1,
+          "p50ms": 12363,
+          "meanTokens": 8343
+        },
+        {
+          "pipeline": "text",
+          "n": 50,
+          "f1": 0.98,
+          "emptyRate": 0,
+          "meanScore": 33.9,
+          "meanDelta": 0.5,
+          "meanAbsDelta": 2.8,
+          "maxDelta": 10,
+          "flaggedRate": 1,
+          "hiddenFoundRate": 0,
+          "p50ms": 6156,
+          "meanTokens": 4260
+        }
+      ]
+    }
+  ],
+  "consistency": [
+    {
+      "pipeline": "vision",
+      "pairs": 10,
+      "meanAbsDiff": 3.2,
+      "maxDiff": 11
+    },
+    {
+      "pipeline": "text",
+      "pairs": 10,
+      "meanAbsDiff": 4.1,
+      "maxDiff": 11
+    }
+  ]
+}
