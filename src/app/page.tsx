@@ -15,7 +15,7 @@ export default function Home() {
             <h1 className="display text-[44px] leading-[1.02] sm:text-[60px] lg:text-[72px]">{site.tagline}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-body">
               JobScreen reads the actual page, the way a person does, and scores it against the job with a quote behind every point. Recruiters rank
-              applicants from any ATS export and read the best first. Job seekers get their score for a job before they apply, and see what would filter them out.
+              applicants from their ATS export and read the best first. Job seekers get their score for a job before they apply, and see what would filter them out.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/screen" className="btn btn-primary">Screen applicants <ArrowRight className="size-4" /></Link>
@@ -31,7 +31,7 @@ export default function Home() {
           <Audience
             cls="bg-teal text-white"
             eyebrow="For recruiters"
-            title="Rank applicants from any ATS export and read the best first."
+            title="Rank applicants from your ATS export and read the best first."
             points={[
               "Drop up to 50 resumes at a time: PDFs, scans, Word files, ZIP exports or whole folders",
               "A rubric from your job description, with weights you control",
@@ -50,7 +50,7 @@ export default function Home() {
               "Paste the job, add your resume",
               "See the likely call (advance, consider or decline) and why",
               "What earned you points, what's missing, and the gaps that cost you",
-              "Broken links and a GitHub that can't be tied to you, flagged",
+              "Broken links and project repos that are private or on another account, flagged",
               "The questions you'd likely be asked in the interview",
             ]}
             href="/check"
@@ -72,7 +72,7 @@ export default function Home() {
               Every category score quotes the resume, and each quote is matched word for word against it, so a citation can't be invented.
             </Feature>
             <Feature cls="bg-surface-card text-ink" icon={<FolderGit2 className="size-6" />} title="Links and GitHub, verified">
-              Every link is opened to see if it loads. A GitHub account is tied to the person only when it publishes the same site, LinkedIn or email.
+              Every link is opened to see if it loads. Project repos that are private, missing or on someone else&apos;s GitHub account are flagged. A GitHub name that differs from the resume isn&apos;t.
             </Feature>
             <Feature cls="bg-peach text-ink" icon={<SlidersHorizontal className="size-6" />} title="Your rubric in one paste">
               Paste a job description and get weighted categories you can edit. Totals are computed in code, beside the model&apos;s own call.
@@ -83,10 +83,26 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="mx-auto mt-24 max-w-[1280px] px-4 sm:px-6">
+          <p className="eyebrow text-muted">What powers it</p>
+          <h2 className="display mt-2 max-w-3xl text-[36px] leading-[1.08] sm:text-[48px]">An open model that reads the page, on infrastructure you can trust with applicant data.</h2>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <Fact title="Reads the page" body={`${site.model} takes each resume as page images, so scans, photos and designed layouts count.`} />
+            <Fact title="Room for the whole resume" body="A 1M-token context window: long resumes, every page, nothing cut." />
+            <Fact title="Open weights" body="The model is MIT-licensed, and JobScreen is MIT-licensed. Run it yourself, change anything." />
+            <Fact title="Applicant data stays private" body="Runs on Nebius Token Factory. Turn on Zero Data Retention and prompts and outputs aren't kept; Nebius doesn't train on your data." />
+          </div>
+          <p className="mt-6 text-sm text-muted">
+            <a className="font-semibold text-ink underline-offset-4 hover:underline" href={site.links.model} target="_blank" rel="noreferrer">{site.model} on Nebius Token Factory</a>
+            {" · "}
+            <a className="font-semibold text-ink underline-offset-4 hover:underline" href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017" target="_blank" rel="noreferrer">Model card</a>
+          </p>
+        </section>
+
         <section className="mx-auto mt-16 max-w-[1280px] px-4 sm:px-6">
           <div className="flex flex-wrap items-center justify-between gap-4 rounded-[16px] bg-surface-soft px-6 py-5">
             <p className="flex items-center gap-2 text-sm text-body">
-              <ListChecks className="size-4 shrink-0" /> Measured on 50 real resumes: scanned resumes read in full, hidden-text tricks caught every time.
+              <ListChecks className="size-4 shrink-0" /> Tested on 50 real resumes: scans read as well as the originals, and every hidden-text trick was caught.
             </p>
             <Link href="/benchmark" className="text-sm font-semibold text-ink underline-offset-4 hover:underline">How it was tested <ArrowRight className="inline size-3.5" /></Link>
           </div>
@@ -108,6 +124,15 @@ function Audience({ cls, eyebrow, title, points, href, cta }: { cls: string; eye
         ))}
       </ul>
       <Link href={href} className="btn mt-6 self-start bg-canvas text-ink">{cta} <ArrowRight className="size-4" /></Link>
+    </div>
+  );
+}
+
+function Fact({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-[24px] border border-hairline bg-canvas p-6">
+      <h3 className="text-base font-semibold text-ink">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-body">{body}</p>
     </div>
   );
 }

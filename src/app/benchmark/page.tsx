@@ -4,7 +4,7 @@ import { BenchBars, type BarGroup } from "@/components/bench-bars";
 import { site } from "@/config/site";
 import { loadFit, loadSummary, stat, type BenchSummary, type FitSummary } from "@/lib/bench";
 
-export const metadata: Metadata = { title: `Benchmark · ${site.name}`, description: "DeepSeek V4.1 Flash 1017 vision vs a PDF text library on 50 real resumes." };
+export const metadata: Metadata = { title: `Benchmark · ${site.name}`, description: `${site.model} vision vs a PDF text library on 50 real resumes.` };
 
 const TRACKS = [
   { id: "clean", label: "Clean PDF", note: "the original file" },

@@ -97,7 +97,6 @@ export type GithubSummary = {
   topRepos: GithubRepo[];
 };
 
-/** cachedInputTokens: prompt tokens Nebius served from its prefix cache (billed at the cached price). */
 /** What the profile agent extracts. Dates are "YYYY-MM", "YYYY" or "" (unknown); an empty endDate on a current role. */
 const dateField = z.string().describe('"YYYY-MM", "YYYY", or "" if not shown');
 export const profileSchema = z.object({
@@ -164,15 +163,26 @@ export type LinkKind = "github" | "linkedin" | "profile" | "website";
  */
 export type LinkStatus = "ok" | "broken" | "blocked" | "unreachable";
 export type LinkCheck = { url: string; kind: LinkKind; status: LinkStatus; httpStatus: number | null; finalUrl: string | null; note: string };
+/**
+ * A repo linked on the resume. own: on the candidate's account. org: an organisation's (work or open source).
+ * other: another person's account. missing: private or doesn't exist (404). unknown: GitHub couldn't be reached.
+ */
+export type GithubProject = { url: string; owner: string; repo: string; status: "own" | "org" | "other" | "missing" | "unknown" };
 export type GithubOwnership = {
   username: string;
-  /** confirmed: shares a link/email with the resume. likely: same name only. mismatch: a different name. */
-  verdict: "confirmed" | "likely" | "unconfirmed" | "mismatch" | "not_found" | "unknown";
+  /**
+   * confirmed: shares a link/email with the resume. likely: same name only. unconfirmed: neither (a different display
+   * name is common and never a flag on its own).
+   */
+  verdict: "confirmed" | "likely" | "unconfirmed" | "not_found" | "unknown";
   signals: { name: boolean | null; site: boolean; linkedin: boolean; email: boolean };
   note: string;
+  /** Repos the resume links to; missing on results saved before project checks existed. */
+  projects?: GithubProject[];
 };
 export type Verification = { links: LinkCheck[]; github: GithubOwnership | null };
 
+/** cachedInputTokens: prompt tokens Nebius served from its prefix cache (billed at the cached-input rate). */
 export type Usage = { inputTokens: number; outputTokens: number; cachedInputTokens: number };
 
 export type Screening = {

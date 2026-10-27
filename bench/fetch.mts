@@ -8,9 +8,8 @@
 //   pnpm bench:fetch
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import { INJECTION } from "../scripts/make-fixtures.mts";
-import { readPdf } from "../scripts/pdf-node.mts";
+import { PDFDocument } from "pdf-lib";
+import { injected, scanned } from "../scripts/pdf-variants.mts";
 
 const DATA = "bench/data";
 const ZIP = `${DATA}/archive.zip`;
@@ -63,30 +62,6 @@ for (const category of CATEGORIES) {
 }
 fs.writeFileSync(`${DATA}/manifest.json`, JSON.stringify(items, null, 1));
 console.log(`${items.length} resumes → ${DATA}/manifest.json`);
-
-/** The rendered pages re-packed as JPEGs: what a scanned or photographed resume looks like. */
-async function scanned(bytes: Uint8Array): Promise<Uint8Array> {
-  const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
-  const { pages } = await readPdf(bytes, { maxPages: 4, width: 1400 });
-  const out = await PDFDocument.create();
-  for (const [i, dataUrl] of pages.entries()) {
-    const { width, height } = src.getPage(i).getSize();
-    const img = await out.embedJpg(Buffer.from(dataUrl.split(",")[1], "base64"));
-    out.addPage([width, height]).drawImage(img, { x: 0, y: 0, width, height });
-  }
-  return out.save();
-}
-
-async function injected(bytes: Uint8Array): Promise<Uint8Array> {
-  const doc = await PDFDocument.load(bytes, { ignoreEncryption: true });
-  const page = doc.getPage(0);
-  const font = await doc.embedFont(StandardFonts.Helvetica);
-  const words = INJECTION.split(" ");
-  for (let i = 0, y = 14; i < words.length; i += 18, y -= 1.5) {
-    page.drawText(words.slice(i, i + 18).join(" "), { x: 36, y, size: 1, font, color: rgb(1, 1, 1) });
-  }
-  return doc.save();
-}
 
 function parseCsv(text: string): string[][] {
   const rows: string[][] = [];

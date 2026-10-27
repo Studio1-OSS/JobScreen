@@ -22,14 +22,37 @@ export function verifyEvidence(quotes: string[], ...sources: string[]): Evidence
 
 const NOT_USERS = new Set(["orgs", "about", "features", "topics", "sponsors", "settings", "marketplace", "login", "join"]);
 
+const GITHUB_LINK = /github\.com\/([A-Za-z0-9](?:[A-Za-z0-9-]{0,38}))(?:\/([A-Za-z0-9._-]+))?/gi;
+
+/** The candidate's GitHub username: their profile link (github.com/user) if the resume shows one, else the first repo's owner. */
 export function findGithubUser(...texts: string[]): string | null {
+  let owner: string | null = null;
   for (const text of texts) {
-    for (const m of text.matchAll(/github\.com\/([A-Za-z0-9](?:[A-Za-z0-9-]{0,38}))/gi)) {
-      if (!NOT_USERS.has(m[1].toLowerCase())) return m[1];
+    for (const m of text.matchAll(GITHUB_LINK)) {
+      if (NOT_USERS.has(m[1].toLowerCase())) continue;
+      if (!repoName(m[2])) return m[1];
+      owner ??= m[1];
     }
   }
-  return null;
+  return owner;
 }
+
+/** Repos linked on the resume (github.com/owner/repo), deduplicated, at most `max`. */
+export function githubRepos(texts: string[], max = 4): { owner: string; repo: string; url: string }[] {
+  const out = new Map<string, { owner: string; repo: string; url: string }>();
+  for (const text of texts) {
+    for (const m of text.matchAll(GITHUB_LINK)) {
+      const repo = repoName(m[2]);
+      if (!repo || NOT_USERS.has(m[1].toLowerCase())) continue;
+      const key = `${m[1]}/${repo}`.toLowerCase();
+      if (!out.has(key)) out.set(key, { owner: m[1], repo, url: `https://github.com/${m[1]}/${repo}` });
+    }
+  }
+  return [...out.values()].slice(0, max);
+}
+
+// "linux." at the end of a sentence is the repo "linux"; "tallyboard.git" is "tallyboard".
+const repoName = (raw: string | undefined) => (raw ?? "").replace(/\.git$/i, "").replace(/\.+$/, "");
 
 /** Scales rubric weights to whole numbers that sum to exactly 100. */
 export function normaliseRubric(rubric: Rubric): Rubric {

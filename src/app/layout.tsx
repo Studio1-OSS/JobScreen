@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3300"),
-  title: `${site.name} · vision-first resume screening`,
+  title: `${site.name} · ${site.tagline}`,
   description: site.description,
   icons: { icon: "/icon.svg" },
 };

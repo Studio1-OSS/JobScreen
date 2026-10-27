@@ -9,7 +9,7 @@ export default function NotFound() {
         <p className="eyebrow text-muted">404</p>
         <h1 className="display mt-3 text-[48px] leading-tight">This page isn’t on the shortlist.</h1>
         <div className="mt-8 flex gap-3">
-          <Link href="/screen" className="btn btn-primary">Screen resumes</Link>
+          <Link href="/screen" className="btn btn-primary">Screen applicants</Link>
           <Link href="/" className="btn btn-secondary">Home</Link>
         </div>
       </main>

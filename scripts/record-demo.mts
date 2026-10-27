@@ -1,18 +1,20 @@
 // A real-usage demo of JobScreen, driven in a browser against the running app (pnpm dev):
-//   recruiter: job description → rubric → a ZIP of real resumes → shortlist → scorecards → hidden text
+//   recruiter: job description → rubric → a ZIP of resumes → shortlist → scorecards → hidden text → GitHub checks
 //   job seeker: example job + their resume → the likely call and why
 //
 //   pnpm demo:test     # run the flow and check it, with screenshots; nothing is recorded
 //   pnpm demo:record   # the same flow, recorded to public/demo/jobscreen-demo.mp4 and docs/demo.gif
 //   pnpm demo:record --assemble   # rebuild the video from the last recording's saved frames (needs DEMO_WORK)
 //
-// Uses real, anonymised resumes from the benchmark dataset (run `pnpm bench:fetch` once). Waiting for the model is
-// sped up in the video; everything else plays at real speed. Set CHROME_PATH to use a specific Chrome/Chromium.
+// Uses the made-up applicants for a backend engineering job in fixtures/demo/ (`pnpm fixtures:demo` rebuilds them).
+// Waiting for the model is sped up in the video; everything else plays at real speed. Set CHROME_PATH to use a
+// specific Chrome/Chromium.
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { chromium, type Locator, type Page } from "playwright-core";
+import { DEMO_JD, PILE, SEEKER } from "./make-demo-pile.mts";
 
 const RECORD = process.argv.includes("--record");
 const ASSEMBLE_ONLY = process.argv.includes("--assemble");
@@ -37,34 +39,14 @@ if (ASSEMBLE_ONLY) {
   process.exit(0);
 }
 
-// --- the resumes: 4 HR (one with a hidden instruction), 5 from other fields, plus one for the job-seeker check ---
-const manifest: { id: string; category: string; files: Record<string, string> }[] = JSON.parse(fs.readFileSync("bench/data/manifest.json", "utf8"));
-const byId = (id: string) => manifest.find((m) => m.id === id)!;
-const pile = [
-  ["24402267", "clean"], ["17422560", "clean"], ["57667857", "clean"], ["39650734", "injected"],
-  ["15802627", "clean"], ["15821633", "clean"], ["20423658", "clean"], ["28772892", "clean"], ["26503829", "clean"],
-] as const;
+// --- the resumes: ten made-up applicants (one scanned, one with a hidden instruction, one whose GitHub links don't add up) ---
 fs.mkdirSync(`${work}/applicants`);
-for (const [id, track] of pile) fs.copyFileSync(byId(id).files[track], `${work}/applicants/applicant-${id}.pdf`);
+for (const r of PILE) fs.copyFileSync(`fixtures/demo/${r.file}`, `${work}/applicants/${r.file}`);
 execFileSync("zip", ["-qr", `${work}/applicants.zip`, "applicants"], { cwd: work });
 const seekerResume = `${work}/my-resume.pdf`;
-fs.copyFileSync(byId("25207620").files.clean, seekerResume);
-
-const JD = `HR Generalist
-
-We're a 400-person logistics company looking for an HR Generalist to run day-to-day people operations.
-
-You'll own
-- Full-cycle recruiting for hourly and salaried roles, from sourcing to offer
-- Onboarding, benefits enrolment and HRIS records (we use Workday)
-- Employee relations: investigations, documentation, coaching managers
-- Policy, compliance (FMLA, ADA, EEO) and training
-
-You bring
-- 3+ years in an HR generalist or HR coordinator role
-- Hands-on recruiting and onboarding at volume
-- Working knowledge of US employment law and an HRIS
-- Clear writing and calm judgment in sensitive conversations`;
+fs.copyFileSync(`fixtures/demo/${SEEKER.file}`, seekerResume);
+const N = PILE.length;
+const JD = DEMO_JD;
 
 // --- browser, fake cursor, recording ---
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || undefined });
@@ -143,18 +125,18 @@ await page.waitForFunction(() => !document.body.innerText.includes("Drafting rub
 waitEnd();
 await pause(1600);
 const rubricTitle = await page.locator("aside input[aria-label='Role title']").inputValue();
-check(`rubric drafted from the job description ("${rubricTitle}")`, /hr|human/i.test(rubricTitle));
+check(`rubric drafted from the job description ("${rubricTitle}")`, /backend|engineer/i.test(rubricTitle));
 await shot("1-rubric");
 
 await page.locator("input[type=file][accept]").setInputFiles(`${work}/applicants.zip`);
 await pause(600);
 await page.selectOption("select", "8");
 waitStart();
-await page.waitForFunction(() => /\b9 of 9 screened/.test(document.body.innerText) && !/running|waiting/.test(document.querySelector("[aria-live=polite]")?.textContent ?? "running"), null, { timeout: 600000, polling: 1000 });
+await page.waitForFunction((n) => new RegExp(`\\b${n} of ${n} screened`).test(document.body.innerText) && !/running|waiting/.test(document.querySelector("[aria-live=polite]")?.textContent ?? "running"), N, { timeout: 600000, polling: 1000 });
 waitEnd();
 await pause(1800);
 const rows = await page.locator("ol > li").count();
-check(`all 9 resumes from the ZIP screened (${rows} rows)`, rows === 9);
+check(`all ${N} resumes from the ZIP screened (${rows} rows)`, rows === N);
 const firstRole = await page.locator("ol > li").first().innerText();
 await shot("2-shortlist");
 
@@ -181,6 +163,26 @@ if (await flagged.count()) {
   await page.keyboard.press("Escape");
   await pause(400);
 }
+
+// The applicant whose GitHub links don't add up: a profile with a different display name (not a flag), a repo that
+// doesn't exist and someone else's repo (both flagged).
+await click(page.getByRole("tab", { name: /^All/ }), 500);
+await page.getByLabel("Search candidates").fill("Jordan");
+await pause(700);
+await click(page.locator("ol > li button[aria-label^='Open scorecard']").first(), 1200);
+const gh = page.getByText("Links and GitHub");
+check("Jordan's scorecard has a Links and GitHub section", await gh.isVisible());
+await gh.scrollIntoViewIfNeeded();
+await scrollIn("[role=dialog]", 120, 600);
+const ghText = await page.locator("[role=dialog]").innerText();
+check("the profile with a different name is only 'Not linked'", /github\.com\/Astrodevil\s*Not linked/i.test(ghText));
+check("someone else's repo is flagged", /torvalds\/linux\s*Another account/i.test(ghText));
+check("the repo that doesn't exist is flagged", /ledger-api-go\s*Private or missing/i.test(ghText));
+await pause(2600);
+await shot("4b-github");
+await page.keyboard.press("Escape");
+await page.getByLabel("Search candidates").fill("");
+await pause(400);
 
 // --- job seeker ---
 await click(page.getByRole("link", { name: /Check my resume|Check resume/ }).first(), 1000);

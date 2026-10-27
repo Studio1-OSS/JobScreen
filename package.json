@@ -1,13 +1,13 @@
 {
   "name": "jobscreen",
   "version": "0.1.0",
-  "description": "Open-source resume scoring that shows its work: rank applicants from any ATS export, or get your resume score for a job before you apply. DeepSeek V4.1 Flash 1017 vision on Nebius Token Factory, built with Mastra.",
+  "description": "Score any resume against any job, with the evidence behind every point. Recruiters rank applicants from their ATS export; job seekers see their score before they apply. DeepSeek V4.1 Flash 1017 vision on Nebius Token Factory, built with Mastra.",
   "license": "MIT",
   "private": true,
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Studio1-OSS/jobscreen.git"
+    "url": "https://github.com/Studio1-OSS/JobScreen.git"
   },
   "keywords": [
     "resume-score",
@@ -30,6 +30,7 @@
     "typecheck": "tsc --noEmit",
     "smoke:nebius": "tsx scripts/nebius-smoke.mts",
     "fixtures": "tsx scripts/make-fixtures.mts",
+    "fixtures:demo": "tsx scripts/make-demo-pile.mts",
     "bench": "tsx scripts/bench.mts",
     "bench:fetch": "tsx bench/fetch.mts",
     "bench:50": "tsx bench/run.mts",
@@ -80,5 +81,9 @@
       "@napi-rs/canvas",
       "sharp"
     ]
+  },
+  "homepage": "https://github.com/Studio1-OSS/JobScreen",
+  "bugs": {
+    "url": "https://github.com/Studio1-OSS/JobScreen/issues"
   }
 }

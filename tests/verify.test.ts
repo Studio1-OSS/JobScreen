@@ -1,12 +1,18 @@
 import { describe, expect, it } from "vitest";
 import type { GithubSummary } from "@/lib/schema";
-import { extractLinks, githubOwnership, guessName, kindOf, namesMatch, normaliseUrl } from "@/lib/verify";
+import { extractLinks, githubOwnership, guessName, kindOf, namesMatch, normaliseUrl, projectStatus } from "@/lib/verify";
 import { isPublicAddress } from "@/mastra/tools/links";
 
 describe("extractLinks", () => {
   it("finds web links, skips emails and prose like Node.js", () => {
     const links = extractLinks(["Maya · maya@example.com · mayaokafor.dev · linkedin.com/in/maya-okafor/ · https://github.com/maya-okafor. Built with Node.js and e.g. React."]);
     expect(links).toEqual(["https://mayaokafor.dev", "https://linkedin.com/in/maya-okafor", "https://github.com/maya-okafor"]);
+  });
+  it("never mistakes the start of an email for a site", () => {
+    expect(extractLinks(["noah.kim@example.com · Seoul"])).toEqual([]);
+  });
+  it("skips degrees that look like domains", () => {
+    expect(extractLinks(["B.Sc. Computer Science, M.Sc. Economics, B.Tech 2020; see https://x.com/maya"])).toEqual(["https://x.com/maya"]);
   });
   it("deduplicates across www and trailing slashes", () => {
     expect(extractLinks(["https://www.site.dev/", "site.dev"])).toHaveLength(1);
@@ -48,13 +54,29 @@ describe("githubOwnership", () => {
     expect(githubOwnership(gh({ blog: "https://www.mayaokafor.dev/" }), "ok", "maya-okafor", resume)?.verdict).toBe("confirmed");
     expect(githubOwnership(gh({ socials: [{ provider: "linkedin", url: "https://www.linkedin.com/in/Maya-Okafor" }] }), "ok", "maya-okafor", resume)?.verdict).toBe("confirmed");
   });
-  it("is only 'likely' on a name match, and flags a different person", () => {
+  it("is only 'likely' on a name match, and never flags a different display name", () => {
     expect(githubOwnership(gh(), "ok", "maya-okafor", resume)?.verdict).toBe("likely");
-    expect(githubOwnership(gh({ name: "Linus Torvalds" }), "ok", "torvalds", resume)?.verdict).toBe("mismatch");
+    // GitHub names often differ from resume names: @astrodevil belongs to Amitesh Anand.
+    const amitesh = { name: "Amitesh Anand", email: "", links: [] };
+    expect(githubOwnership(gh({ username: "Astrodevil", name: "Mr. Ånand" }), "ok", "astrodevil", amitesh)?.verdict).toBe("unconfirmed");
+    expect(githubOwnership(gh({ name: "Linus Torvalds" }), "ok", "torvalds", resume)?.verdict).toBe("unconfirmed");
   });
   it("tells 'doesn't exist' apart from 'couldn't check'", () => {
     expect(githubOwnership(null, "not_found", "nobody-here", resume)?.verdict).toBe("not_found");
     expect(githubOwnership(null, "unavailable", "maya-okafor", resume)?.verdict).toBe("unknown");
+  });
+});
+
+describe("projectStatus", () => {
+  const repo = (owner: string, ownerType: string | null = "User", status: "ok" | "not_found" | "unavailable" = "ok") => ({ status, owner, ownerType });
+  it("flags repos that are private, gone or on another person's account", () => {
+    expect(projectStatus(repo("Astrodevil"), "astrodevil")).toBe("own");
+    expect(projectStatus(repo("torvalds"), "astrodevil")).toBe("other");
+    expect(projectStatus(repo("Astrodevil", null, "not_found"), "astrodevil")).toBe("missing");
+  });
+  it("accepts an organisation's repo and never guesses when GitHub is unreachable", () => {
+    expect(projectStatus(repo("vercel", "Organization"), "astrodevil")).toBe("org");
+    expect(projectStatus(repo("torvalds", null, "unavailable"), "astrodevil")).toBe("unknown");
   });
 });
 

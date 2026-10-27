@@ -7,7 +7,7 @@ import { kindOf } from "@/lib/verify";
 
 const TIMEOUT_MS = 6000;
 const MAX_REDIRECTS = 4;
-const UA = "Mozilla/5.0 (compatible; JobScreen link check; +https://github.com/Studio1-OSS/jobscreen)";
+const UA = "Mozilla/5.0 (compatible; JobScreen link check; +https://github.com/Studio1-OSS/JobScreen)";
 
 /** True only for addresses on the public internet. */
 export function isPublicAddress(ip: string): boolean {

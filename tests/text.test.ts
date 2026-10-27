@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { PRESETS } from "@/lib/presets";
 import type { CategoryResult } from "@/lib/schema";
-import { clampScore, findGithubUser, normaliseRubric, plausibleName, recommend, stated, verifyEvidence, weightedTotal } from "@/lib/text";
+import { clampScore, findGithubUser, githubRepos, normaliseRubric, plausibleName, recommend, stated, verifyEvidence, weightedTotal } from "@/lib/text";
 
 describe("normaliseRubric", () => {
   it("scales weights to whole numbers that sum to exactly 100", () => {
@@ -57,5 +57,16 @@ describe("findGithubUser", () => {
   it("finds a profile and skips GitHub's own pages", () => {
     expect(findGithubUser("see github.com/orgs/acme and https://github.com/maya-okafor/tallyboard")).toBe("maya-okafor");
     expect(findGithubUser("no links here")).toBeNull();
+  });
+  it("prefers the profile link over a repo's owner", () => {
+    expect(findGithubUser("Payroll bot: github.com/torvalds/linux · GitHub: github.com/Astrodevil")).toBe("Astrodevil");
+  });
+});
+
+describe("githubRepos", () => {
+  it("lists linked repos once, without trailing punctuation or .git", () => {
+    expect(githubRepos(["github.com/Astrodevil · github.com/torvalds/linux. Also https://github.com/torvalds/linux.git and github.com/orgs/acme"])).toEqual([
+      { owner: "torvalds", repo: "linux", url: "https://github.com/torvalds/linux" },
+    ]);
   });
 });

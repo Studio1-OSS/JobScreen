@@ -22,7 +22,7 @@ If you change prompts, the reader, the scorer or `src/lib/pdf-core.ts`, also run
 
 ```sh
 pnpm fixtures && pnpm bench    # 3 fixture resumes, about 30 seconds: hidden text caught, ranking, consistency, profile, call
-pnpm bench:fetch && pnpm demo:test   # drives the real UI in a browser (both flows) and checks it; needs pnpm dev
+pnpm demo:test   # drives the real UI in a browser (both flows) on the made-up pile in fixtures/demo; needs pnpm dev
 pnpm bench:fetch && pnpm bench:50 --limit 5   # a slice of the 50-resume benchmark
 ```
 

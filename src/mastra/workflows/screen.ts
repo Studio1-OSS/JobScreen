@@ -3,13 +3,13 @@
 import { createStep, createWorkflow } from "@mastra/core/workflows";
 import { z } from "zod";
 import { rubricSchema, type GithubSummary, type Reading, type Screening, type Usage } from "@/lib/schema";
-import { clampScore, findGithubUser, plausibleName, recommend, stated, verifyEvidence, weightedTotal } from "@/lib/text";
+import { clampScore, findGithubUser, githubRepos, plausibleName, recommend, stated, verifyEvidence, weightedTotal } from "@/lib/text";
 import { extractProfile } from "../agents/profile";
 import { addUsage, readPages } from "../agents/reader";
 import { scoreResume, githubText } from "../agents/scorer";
-import { githubTool, type GithubLookup } from "../tools/github";
+import { fetchRepo, githubTool, type GithubLookup } from "../tools/github";
 import { checkLinks } from "../tools/links";
-import { extractLinks, githubOwnership, guessName } from "@/lib/verify";
+import { extractLinks, githubOwnership, guessName, projectStatus } from "@/lib/verify";
 
 export const screenInput = z.object({
   /** Rendered pages as JPEG data URLs. Empty means "score the text as given" (the text-only baseline). */
@@ -121,12 +121,18 @@ const verify = createStep({
     const { reading } = getStepResult(read) as { reading: Reading };
     const gh = getStepResult(github) as { profile: GithubLookup["profile"]; status: GithubLookup["status"] | "skipped" } | undefined;
     const links = extractLinks([reading.links.join(" "), reading.transcript]);
-    const checked = await checkLinks(links);
-    const ownership =
-      reading.github && gh && gh.status !== "skipped"
-        ? githubOwnership(gh.profile, gh.status as GithubLookup["status"], reading.github, { name: reading.name || guessName(reading.transcript), email: reading.email || (reading.transcript.match(/[\w.+-]+@[\w-]+\.[\w.-]+/)?.[0] ?? ""), links })
-        : null;
-    return { verification: { links: checked, github: ownership } };
+    const username = reading.github && gh && gh.status !== "skipped" ? reading.github : null;
+    const [checked, projects] = await Promise.all([
+      checkLinks(links),
+      // Each repo the resume links to: on the candidate's own account, an organisation's, someone else's, or not public.
+      username
+        ? Promise.all(githubRepos([reading.links.join(" "), reading.transcript]).map(async (r) => ({ ...r, status: projectStatus(await fetchRepo(r.owner, r.repo), gh?.profile?.username ?? username) })))
+        : [],
+    ]);
+    const ownership = username
+      ? githubOwnership(gh!.profile, gh!.status as GithubLookup["status"], username, { name: reading.name || guessName(reading.transcript), email: reading.email || (reading.transcript.match(/[\w.+-]+@[\w-]+\.[\w.-]+/)?.[0] ?? ""), links })
+      : null;
+    return { verification: { links: checked, github: ownership && { ...ownership, projects } } };
   },
 });
 
@@ -154,12 +160,19 @@ const finish = createStep({
     };
     const usage = { ...s.usage };
     if (p.usage) addUsage(usage, p.usage);
-    // A resume whose GitHub can't be tied to the candidate, or doesn't exist, is a fact worth a reviewer's eye.
+    // A GitHub that doesn't exist, or project repos that are private, gone or on someone else's account, are facts worth a reviewer's eye.
     const redFlags = [...s.redFlags];
     const own = v.verification?.github;
     if (own?.verdict === "not_found") redFlags.push(`The GitHub link (@${own.username}) points to an account that doesn't exist.`);
-    if (own?.verdict === "mismatch") redFlags.push(`GitHub @${own.username} may not be the candidate's: ${own.note}`);
-    const broken = v.verification?.links.filter((l) => l.status === "broken" || l.status === "unreachable") ?? [];
+    const repos = (status: string) => own?.projects?.filter((p) => p.status === status) ?? [];
+    const list = (ps: { owner: string; repo: string }[]) => ps.map((p) => `${p.owner}/${p.repo}`).join(", ");
+    const missing = repos("missing");
+    const other = repos("other");
+    if (missing.length) redFlags.push(`${missing.length > 1 ? "Project repos" : "A project repo"} can't be opened (private or doesn't exist): ${list(missing)}.`);
+    if (other.length) redFlags.push(`${other.length > 1 ? "Projects are" : "A project is"} on a different GitHub account than @${own!.username}: ${list(other)}.`);
+    // A missing repo is already flagged above, so it isn't counted again as a link that doesn't load.
+    const flagged = new Set(missing.map((p) => p.url.toLowerCase()));
+    const broken = v.verification?.links.filter((l) => (l.status === "broken" || l.status === "unreachable") && !flagged.has(l.url.toLowerCase())) ?? [];
     if (broken.length) redFlags.push(`${broken.length} link${broken.length > 1 ? "s" : ""} on the resume ${broken.length > 1 ? "don't" : "doesn't"} load.`);
     return { ...s, redFlags, profile: p.profile, verification: v.verification, usage };
   },

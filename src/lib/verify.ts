@@ -1,7 +1,7 @@
 // Pure verification logic: which links a resume shows, what kind they are, and whether a GitHub account visibly
 // belongs to the candidate. Network checks live in src/mastra/tools/links.ts.
 import { parse } from "tldts";
-import type { GithubOwnership, GithubSummary, LinkKind } from "./schema";
+import type { GithubOwnership, GithubProject, GithubSummary, LinkKind } from "./schema";
 
 const URLISH = /\b((?:https?:\/\/)?(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s<>()"'`,;]*)?)/gi;
 
@@ -11,12 +11,18 @@ export function extractLinks(texts: string[], max = 8): string[] {
   for (const text of texts)
     for (const m of text.matchAll(URLISH)) {
       const at = m.index ?? 0;
-      if (text[at - 1] === "@" || /@/.test(m[1])) continue; // part of an email address
+      // Part of an email address: after the @, or before it ("noah.kim@…" would otherwise be the site noah.kim).
+      if (text[at - 1] === "@" || text[at + m[1].length] === "@" || /@/.test(m[1])) continue;
+      if (isAbbreviation(m[1])) continue;
       const url = normaliseUrl(m[1]);
       if (url && !out.has(key(url))) out.set(key(url), url);
     }
   return [...out.values()].slice(0, max);
 }
+
+// Degrees and abbreviations parse as hosts on real country domains: "B.Sc" is b.sc, "B.Tech" is b.tech. A bare host
+// (no scheme, no path) whose name is a single letter is one of those, not a link.
+const isAbbreviation = (raw: string) => !/^https?:\/\//i.test(raw) && !raw.includes("/") && (parse(raw).domainWithoutSuffix ?? "").length === 1;
 
 export function normaliseUrl(raw: string): string | null {
   const trimmed = raw.trim().replace(/[.)\]]+$/, "");
@@ -115,6 +121,18 @@ export function githubOwnership(
   const proof = [site && "its website matches the resume", linkedin && "it links the same LinkedIn", email && "its public email matches"].filter(Boolean) as string[];
   if (proof.length) return { username: gh.username, verdict: "confirmed", signals, note: `Confirmed: ${proof.join(", ")}.` };
   if (name) return { username: gh.username, verdict: "likely", signals, note: `The account's name (${gh.name}) matches, but it shares no link with the resume.` };
-  if (name === false) return { username: gh.username, verdict: "mismatch", signals, note: `The account belongs to "${gh.name}", which doesn't match the resume, and it shares no link with it.` };
-  return { username: gh.username, verdict: "unconfirmed", signals, note: "The account shows no name and shares no link with the resume, so it can't be tied to the candidate." };
+  // GitHub usernames and display names often differ from the name on a resume, so a different name is not a flag.
+  if (name === false) return { username: gh.username, verdict: "unconfirmed", signals, note: "The account shares no link with the resume, so it can't be confirmed. A different display name on GitHub is common and isn't a flag." };
+  return { username: gh.username, verdict: "unconfirmed", signals, note: "The account shows no name and shares no link with the resume, so it can't be confirmed." };
+}
+
+/**
+ * How a repo linked on the resume relates to the candidate's account. A repo that's private or gone, or that sits on
+ * another person's account, is worth a reviewer's eye; an organisation's repo (work, open source) is normal.
+ */
+export function projectStatus(repo: { status: "ok" | "not_found" | "unavailable"; owner: string; ownerType: string | null }, username: string): GithubProject["status"] {
+  if (repo.status === "not_found") return "missing";
+  if (repo.status !== "ok") return "unknown";
+  if (repo.owner.toLowerCase() === username.toLowerCase()) return "own";
+  return repo.ownerType === "Organization" ? "org" : "other";
 }

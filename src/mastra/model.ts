@@ -20,8 +20,8 @@ export function nebius(): MastraModelConfig {
  */
 export const callOptions = (thinking: boolean, maxOutputTokens: number, cacheKey?: string) => ({
   modelSettings: { temperature: 0, maxRetries: 2, maxOutputTokens },
-  // Nebius caches prompt prefixes automatically; prompt_cache_key routes calls that share a prefix (same agent,
-  // same rubric) to the server that already holds it. https://docs.tokenfactory.nebius.com/cached-tokens
+  // Nebius caches identical prompt prefixes automatically (best effort), so fixed instructions go first. The
+  // prompt_cache_key groups calls that share a prefix. https://docs.tokenfactory.nebius.com/cached-tokens
   providerOptions: { nebius: { chat_template_kwargs: { enable_thinking: thinking }, ...(cacheKey ? { prompt_cache_key: cacheKey } : {}) } },
 });
 

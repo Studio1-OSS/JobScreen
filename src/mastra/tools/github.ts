@@ -1,12 +1,14 @@
 // GitHub lookups through Octokit, GitHub's official SDK: profile, the repos worth reading (ranked in code, not by a
 // model), merged PRs to other people's projects, and what the account publishes about itself (site, email, socials),
-// which src/lib/verify.ts uses to tie the account to the candidate.
+// which src/lib/verify.ts uses to tie the account to the candidate. Repos linked on the resume are looked up too.
 import { createTool } from "@mastra/core/tools";
 import { Octokit } from "@octokit/rest";
 import { z } from "zod";
 import type { GithubRepo, GithubSummary } from "@/lib/schema";
 
 export type GithubLookup = { profile: GithubSummary | null; status: "ok" | "not_found" | "unavailable" };
+/** A repo linked on a resume: who really owns it (after renames and transfers), and whether that's a person or an org. */
+export type RepoLookup = { status: "ok" | "not_found" | "unavailable"; owner: string; ownerType: string | null };
 
 let client: Octokit | null = null;
 const quiet = () => {};
@@ -25,6 +27,25 @@ export async function fetchGithub(username: string): Promise<GithubLookup> {
   if (cache.size > 500) cache.delete(cache.keys().next().value!);
   // "unavailable" can mean rate limited, so only real answers are cached.
   if (value.status !== "unavailable") cache.set(key, { at: Date.now(), value });
+  return value;
+}
+
+const repoCache = new Map<string, { at: number; value: RepoLookup }>();
+
+/** One request per repo. A 404 means private or gone: GitHub answers the same for both. */
+export async function fetchRepo(owner: string, repo: string): Promise<RepoLookup> {
+  const key = `${owner}/${repo}`.toLowerCase();
+  const hit = repoCache.get(key);
+  if (hit && Date.now() - hit.at < 3.6e6) return hit.value;
+  let value: RepoLookup;
+  try {
+    const { data } = await octokit().rest.repos.get({ owner, repo });
+    value = { status: "ok", owner: data.owner.login, ownerType: data.owner.type };
+  } catch (e) {
+    value = { status: statusOf(e) === 404 ? "not_found" : "unavailable", owner, ownerType: null };
+  }
+  if (repoCache.size > 500) repoCache.delete(repoCache.keys().next().value!);
+  if (value.status !== "unavailable") repoCache.set(key, { at: Date.now(), value });
   return value;
 }
 

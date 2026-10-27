@@ -169,7 +169,7 @@ export function ResumeCheck() {
           {busy ? "Checking…" : result ? "Check again" : "Check my resume"}
         </button>
         <p className="flex items-center gap-1.5 text-sm text-muted">
-          <ShieldCheck className="size-4" /> Your file is read in your browser and sent only to the model for this check. Nothing is saved.
+          <ShieldCheck className="size-4" /> Your file is read in your browser and sent only to the model for this check. JobScreen saves nothing.
         </p>
       </div>
       {error && <p className="mt-3 text-sm text-error">{error}</p>}

@@ -5,7 +5,7 @@ import { BadgeCheck, Briefcase, CircleAlert, CircleCheck, CircleHelp, CircleX, D
 import { callOf, disagrees, displayHeadline, displayName, type Candidate } from "@/lib/candidate";
 import { download, profileFileName } from "@/lib/download";
 import { flatSkills } from "@/lib/profile";
-import type { GithubOwnership, JsonResume, LinkCheck, Verification } from "@/lib/schema";
+import type { GithubOwnership, GithubProject, JsonResume, LinkCheck, Verification } from "@/lib/schema";
 import { REC } from "./rec";
 
 type Props = { candidate: Candidate; stale?: boolean; audience: "recruiter" | "candidate" };
@@ -189,13 +189,21 @@ const OWNERSHIP: Record<GithubOwnership["verdict"], { label: string; cls: string
   confirmed: { label: "Verified owner", cls: "bg-mint text-ink" },
   likely: { label: "Likely theirs", cls: "bg-surface-strong text-ink" },
   unconfirmed: { label: "Not linked", cls: "bg-ochre/50 text-ink" },
-  mismatch: { label: "Different name", cls: "bg-coral text-white" },
   not_found: { label: "Doesn't exist", cls: "bg-coral text-white" },
+  unknown: { label: "Not checked", cls: "bg-surface-strong text-ink" },
+};
+const PROJECT: Record<GithubProject["status"], { label: string; cls: string }> = {
+  own: { label: "Their repo", cls: "bg-mint text-ink" },
+  org: { label: "Org repo", cls: "bg-surface-strong text-ink" },
+  other: { label: "Another account", cls: "bg-coral text-white" },
+  missing: { label: "Private or missing", cls: "bg-coral text-white" },
   unknown: { label: "Not checked", cls: "bg-surface-strong text-ink" },
 };
 
 function Verify({ v, you }: { v: Verification; you: boolean }) {
   if (!v.links.length && !v.github) return null;
+  // Results saved by an older version can carry a verdict that no longer exists.
+  const own = v.github ? (OWNERSHIP[v.github.verdict] ?? OWNERSHIP.unknown) : OWNERSHIP.unknown;
   return (
     <section>
       <p className="eyebrow mb-3 flex items-center gap-2 text-muted"><Link2 className="size-4" /> Links and GitHub</p>
@@ -203,12 +211,22 @@ function Verify({ v, you }: { v: Verification; you: boolean }) {
         <div className="mb-3 rounded-[16px] border border-hairline p-4">
           <p className="flex flex-wrap items-center gap-2 text-sm font-semibold text-ink">
             <FolderGit2 className="size-4" /> github.com/{v.github.username}
-            <span className={`pill font-semibold ${OWNERSHIP[v.github.verdict].cls}`}>
+            <span className={`pill font-semibold ${own.cls}`}>
               {v.github.verdict === "confirmed" && <BadgeCheck className="size-3.5" />}
-              {OWNERSHIP[v.github.verdict].label}
+              {own.label}
             </span>
           </p>
           <p className="mt-1 text-sm text-body">{v.github.note}</p>
+          {!!v.github.projects?.length && (
+            <ul className="mt-3 space-y-1.5">
+              {v.github.projects.map((p) => (
+                <li key={p.url} className="flex flex-wrap items-center gap-2 text-sm">
+                  <a href={p.url} target="_blank" rel="noreferrer nofollow" className="text-ink hover:underline">{p.owner}/{p.repo}</a>
+                  <span className={`pill font-semibold ${PROJECT[p.status].cls}`}>{PROJECT[p.status].label}</span>
+                </li>
+              ))}
+            </ul>
+          )}
           {you && (v.github.verdict === "likely" || v.github.verdict === "unconfirmed") && (
             <p className="mt-1 text-xs text-muted">Tip: add your portfolio site or LinkedIn to your GitHub profile so recruiters can confirm it&apos;s you.</p>
           )}

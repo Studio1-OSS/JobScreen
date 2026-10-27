@@ -46,9 +46,19 @@ A linked GitHub account is looked up with [Octokit](https://github.com/octokit/o
 | --- | --- |
 | **Verified owner** | The account publishes the same website, LinkedIn or email as the resume |
 | **Likely theirs** | Same name, but no shared link |
-| **Different name** | The account belongs to someone else by name (red flag) |
+| **Not linked** | No shared link. A display name that differs from the resume is common and isn't a flag |
 | **Doesn't exist** | No such account (red flag) |
-| **Not linked** | No name and no shared link |
+
+Every repo the resume links to (`github.com/owner/repo`) is looked up too:
+
+| Repo | Means |
+| --- | --- |
+| **Their repo** | On the candidate's own account |
+| **Org repo** | On an organisation's account, such as an employer or an open-source project |
+| **Another account** | On a different person's account (red flag) |
+| **Private or missing** | GitHub returns 404: the repo is private or doesn't exist (red flag) |
+
+<img src="screenshots/github.png" alt="Links and GitHub on a made-up applicant: the profile is only Not linked (a different display name isn't a flag), a repo that doesn't exist is Private or missing, torvalds/linux is on Another account, and a dead portfolio domain" width="900">
 
 Only links visible on the rendered page are checked. A URL hidden in the PDF is never opened.
 
@@ -67,7 +77,7 @@ rubric (preset or rubric agent) ────────────────
                                            github   Octokit: profile, top repos, merged PRs, socials
                                            ┌ score    scorer agent: rubric + transcript → scorecard + call
                                            ├ profile  profile agent: transcript → JSON Resume
-                                           └ verify   link checks, GitHub ownership
+                                           └ verify   link checks, GitHub ownership, linked repos
                                            finish   code: totals, quote checks, years of experience, flags
 ```
 
@@ -84,10 +94,10 @@ rubric (preset or rubric agent) ────────────────
 ## Deploying
 
 - It's a standard Next.js app with no database. Deploy anywhere Node runs and set `NEBIUS_API_KEY` and `JOBSCREEN_ACCESS_KEY`.
-- A screening takes 10-40 seconds, so allow function durations of at least 60 seconds.
+- Most resumes finish in 10-25 seconds; the screening route allows up to 180, so set your host's function limit to match.
 - Each request carries one resume. Bulk speed is set by the browser's queue and your Nebius rate limit.
 - Workflow runs aren't kept in memory after they finish.
-- Nebius [caches prompt prefixes](https://docs.tokenfactory.nebius.com/cached-tokens) automatically. Prompts put the fixed part first and send a `prompt_cache_key`.
+- Nebius [caches identical prompt prefixes](https://docs.tokenfactory.nebius.com/cached-tokens) automatically, on a best-effort basis, with no setup. JobScreen puts the fixed instructions and the rubric first, so a batch against one job reuses them.
 
 ## Extending
 

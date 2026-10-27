@@ -9,7 +9,7 @@ export const scorerAgent = new Agent({
   id: "scorer",
   name: "Candidate scorer",
   description: "Scores one resume against a rubric and quotes its evidence.",
-  instructions: `You are a careful, fair technical screener. You score one candidate against the rubric you are given.
+  instructions: `You are a careful, fair resume screener. You score one candidate against the rubric you are given.
 
 Scoring, per category, integer 0-10:
 - 0: no evidence. 3: mentioned but thin. 5: solid, typical evidence. 8: strong, specific, with results. 10: exceptional and rare.
